@@ -4,7 +4,7 @@
   "description": "convert csv to anything",
   "main": "csv2x.js",
   "scripts": {
-    "test": "",
+    "test": "mocha",
     "start": "node csv2x"
   },
   "keywords": [
