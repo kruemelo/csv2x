@@ -12,7 +12,7 @@ describe('csv2x', function () {
 				debug(this.test.title, err, html);
 				assert.strictEqual(
 					html, 
-					'1: ["A","B","C"]\n2: ["X","Y","Z"]\n'
+					'0: ["A","B","C"]\n1: ["X","Y","Z"]\n'
 				);
 				done();
 			}
@@ -25,9 +25,10 @@ describe('csv2x', function () {
 			{csv: 'A,B,C\nX,Y,Z'},
 			(err, html) => {
 				debug(this.test.title, err, html);
+
 				assert.strictEqual(
 					html, 
-					'\n<tr>\n<td>A<td/>\n<td>B<td/>\n<td>C<td/>\n<tr>\n<tr>\n<td>X<td/>\n<td>Y<td/>\n<td>Z<td/>\n<tr>'
+					'\n<tr>\n  <td>A</td>\n  <td>B</td>\n  <td>C</td>\n</tr>\n<tr>\n  <td>X</td>\n  <td>Y</td>\n  <td>Z</td>\n</tr>'
 				);
 				done();
 			}

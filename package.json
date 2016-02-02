@@ -1,6 +1,6 @@
 {
   "name": "csv2x",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "convert csv to anything",
   "main": "csv2x.js",
   "scripts": {

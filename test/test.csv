@@ -1,0 +1,3 @@
+id;parent id;Components;Target Version;Implemented Version;Title;Issue Type;Acceptance Criteria;Details;Comments
+1; ;component 1;V1;V1.1;First Title;REQ;fullfilled;foo; bar
+2;1;component 1.2;V2;V2.2; Second Title;BUG;rejected;;baz

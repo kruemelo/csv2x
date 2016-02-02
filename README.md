@@ -16,24 +16,29 @@ C,D"
 <tr>
 ```
 
-with input file:
+with input filename (CLI-only):
 ```
-$ node csv2x --if=./node_modules/papaparse/tests/long-sample.csv
+$ node csv2x --if=./test/test.csv
+```
+
+with template filename (CLI-only):
+```
+$ node csv2x --if=./test/test.csv --tf=./test/test-template.html
 ```
 
 with template option to use a predefined template:
 ```
-$ node csv2x --if=./node_modules/papaparse/tests/long-sample.csv --template=test
+$ node csv2x --if=./test/test.csv --template=test
 ```
 
 with header option to handle the first csv row as field names:
 ```
-$ node csv2x --if=./node_modules/papaparse/tests/long-sample.csv --template=test
+$ node csv2x --if=./test/test.csv --template=test
 ```
 
 with debug option:
 ```
-$ DEBUG=csv2x node csv2x --if=./node_modules/papaparse/tests/long-sample.csv
+$ DEBUG=csv2x node csv2x --if=./test/test.csv
 $ DEBUG=csv2x,csv2x-test npm test
 ```
 
@@ -70,9 +75,10 @@ csv2x(
 ```
 {
   rowIndex: int current csv row index,
+  isLastRow: boolean indicating the last csv row,
   argv: option hash set in csv2x(), minimist argv when running from cli,
   parser: csv-parser (papaparse/babyparse) instance,
-  row: the current csv row data,
+  row: the current csv row data (array or object),
   errors: csv-parser errors,
   meta: csv-parser meta data
 }

@@ -30,6 +30,9 @@
   				if (argv.if) {
   					argv.csv = require('fs').readFileSync(argv.if, 'utf8');
   				}
+          if (argv.tf) {
+           argv.template = require('fs').readFileSync(argv.tf, 'utf8'); 
+          }
   				return argv;
   			})(),
         // csv2x-callback
@@ -61,7 +64,7 @@
   debug = debug || function () {};
 
   var predefinedTemplates = {
-  	'html': '\n<tr>\n<%=Array.prototype.map.apply(row, [function (cell) { return ["<td>", cell, "<td/>"].join(""); }]).join("\\n")%>\n<tr>',
+  	'html': '\n<tr>\n<%=Array.prototype.map.apply(row, [function (cell) { return ["  <td>", _.escape(cell), "</td>"].join(""); }]).join("\\n")%>\n</tr>',
     'test': '<%=rowIndex%>: <%=JSON.stringify(row)%>\n'
   };
 
@@ -70,28 +73,50 @@
 
   		debug('csv2x(argv)', argv);
 
-			var html = '',
+			var resultStr = '',
 				template = _.template(predefinedTemplates[argv.template] || argv.template || predefinedTemplates.html),
-        rowIndex = 0,
-        complete = false;
+        rowIndex = -1,
+        complete = false,
+        previousResults;
   		
 			argv.csv = argv.csv || '';
   		argv.parserConfig = {};
 
   		argv.parserConfig.header = !!argv.header;
 
-  		argv.parserConfig.step = function (results, parser) {
-				debug('step(results)', results);
-				results.data.forEach(function (row) {
-					html += template({
-            rowIndex: ++rowIndex,
-						argv: argv,
-						parser: parser,
-						row: row,
-						errors: results.errors,
-						meta: results.meta
-					});
+      function appendResults (results) {
+        debug('appendResults()', results);
+				results.data.some(function (row) {
+          debug('appendResults some row', row);
+          try {
+  					resultStr += template({
+              rowIndex: ++rowIndex,
+              isLastRow: results.isLastRow,
+  						argv: argv,
+  						parser: results.parser,
+  						row: row,
+  						errors: results.errors,
+  						meta: results.meta
+  					});   
+            debug('appended result string:', resultStr);         
+          }
+          catch (e) {
+            debug('catched error in appendResults():', e);
+            callback(e);
+            return true;
+          }
 				});
+      }
+
+      argv.parserConfig.step = function (results, parser) {
+        debug('step(results)', results);
+        debug('step() previousResults', previousResults);
+        if (previousResults) {
+          appendResults(previousResults);
+        }
+        results.parser = parser;
+        results.isLastRow = undefined;
+        previousResults = results;
 			};
 
 			argv.parserConfig.complete = function (results) {
@@ -100,13 +125,17 @@
           return;
         }
         complete = true;
-				callback(null, html);
-			};
+        if (previousResults) {
+          previousResults.isLastRow = true;
+          appendResults(previousResults);
+        }        
+				callback(null, resultStr);
+			}; 
 
   		csvParser.parse(argv.csv, argv.parserConfig);
   	}
   	catch (e) {
-  		debug(e);
+  		debug('catched error in csv2x():', e);
   		callback(e);
   	}
 
