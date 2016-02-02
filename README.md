@@ -44,24 +44,24 @@ $ DEBUG=csv2x,csv2x-test npm test
 const csv2x = require('csv2x');
 
 csv2x(
-	{csv: 'A,B,C\nX,Y,Z'},
-	(err, html) => {
-		console.log(html)
-		// => html: '\n<tr>\n<td>A<td/>\n<td>B<td/>\n<td>C<td/>\n<tr>\n<tr>\n<td>X<td/>\n<td>Y<td/>\n<td>Z<td/>\n<tr>'
-	}
+  {csv: 'A,B,C\nX,Y,Z'},
+  (err, html) => {
+    console.log(html)
+    // => '\n<tr>\n<td>A<td/>\n<td>B<td/>\n<td>C<td/>\n<tr>\n<tr>\n<td>X<td/>\n<td>Y<td/>\n<td>Z<td/>\n<tr>'
+  }
 );
 ```
 
 convert to user defined template (applied per row, uses [underscore micro-template](http://underscorejs.org/#template))
 ```
 csv2x(
-	{
-		csv: 'A,B,C\nX,Y,Z', 
-		template: 'bla bla: <%=JSON.stringify(row)%>\n'
-	},
-	(err, html) => {
-		// => 'bla bla: ["A","B","C"]\nbla bla: ["X","Y","Z"]\n'
-	}
+  {
+    csv: 'A,B,C\nX,Y,Z', 
+    template: 'bla bla: <%=JSON.stringify(row)%>\n'
+  },
+  (err, result) => {
+    // => result: 'bla bla: ["A","B","C"]\nbla bla: ["X","Y","Z"]\n'
+  }
 );
 ```
 
@@ -70,11 +70,11 @@ csv2x(
 ```
 {
   rowIndex: int current csv row index,
-	argv: option hash set in csv2x(), minimist argv when running from cli,
-	parser: csv-parser (papaparse/babyparse) instance,
-	row: the current csv row data,
-	errors: csv-parser errors,
-	meta: csv-parser meta data
+  argv: option hash set in csv2x(), minimist argv when running from cli,
+  parser: csv-parser (papaparse/babyparse) instance,
+  row: the current csv row data,
+  errors: csv-parser errors,
+  meta: csv-parser meta data
 }
 ```
 
