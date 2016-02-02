@@ -12,6 +12,10 @@
     "html",
     "convert"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kruemelo/csv2x.git"
+  },
   "author": "kruemelo",
   "license": "MIT",
   "dependencies": {
