@@ -1,49 +1,46 @@
 <% if (rowIndex === 0) { %>
 <html>
-	<head>
-		<meta charset="utf-8" />
-	</head>
-<%
-}
-%>
+  <head>
+    <meta charset="utf-8" />
+  </head><%
+} 
+
+if(!isEmptyRow) { %>
 <h2><%-row.Title %></h2>
 
 <dl>
   
   <dt>id</dt>
-  <dd>AL-<%-row.id%></dd>
+  <dd>XX-<%-row.id || 'none' %></dd>
 
   <dt>parent id</dt>
-  <dd><%-(row['parent id'] ? 'AL-' + row['parent id'] : '')%></dd>  
+  <dd><%-(String(row['parent id']).trim() ? 'XX-' + row['parent id'] : 'none')%></dd>  
 
   <dt>Components</dt>
-  <dd><%-row.Components%></dd>  
+  <dd><%-row.Components || 'none'%></dd>  
 
   <dt>Target Version</dt>
-  <dd><%-row['Target Version']%></dd>  
+  <dd><%-row['Target Version'] || 'none'%></dd>  
 
   <dt>Implemented Version</dt>
-  <dd><%-row['Implemented Version']%></dd>  
+  <dd><%-row['Implemented Version'] || 'none'%></dd>  
 
   <dt>Issue Type</dt>
-  <dd><%-row['Issue Type']%></dd>  
-
-  <dt>Components</dt>
-  <dd><%-row.Components%></dd>  
+  <dd><%-row['Issue Type'] || 'none'%></dd>  
 
 </dl>
 
 <h3>Acceptance Criteria</h3>
-<p><%-row['Acceptance Criteria'] %></p>
+<p><pre><%-row['Acceptance Criteria'] %></pre></p>
 
 <h3>Details</h3>
-<p><%-row['Details'] %></p>
+<p><pre><%-row['Details'] %></pre></p>
 
 <h3>Comments</h3>
-<p><%-row['Comments'] %></p>
+<p><pre><%-row['Comments'] %></pre></p><%
+} 
 
-<% if (isLastRow) { %>
-</html>
-<%
+if (isLastRow) { %>
+</html><%
 }
 %>
