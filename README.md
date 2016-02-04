@@ -2,6 +2,8 @@
 
 ## command line usage
 
+csv content is specified by `--csv`
+
 ```   
 $ node csv2x --csv="A,B
 C,D"
@@ -16,24 +18,24 @@ C,D"
 <tr>
 ```
 
-with input filename (CLI-only):
+with input filename `--if` (CLI-only):
 ```
 $ node csv2x --if=./test/test.csv
 ```
 
-with template filename (CLI-only):
+with template filename `--tf` (CLI-only):
 ```
 $ node csv2x --if=./test/test.csv --tf=./test/test-template.html
 ```
 
-with template option to use a predefined template:
+with template option `--template` to use a predefined template:
 ```
 $ node csv2x --if=./test/test.csv --template=test
 ```
 
-with header option to handle the first csv row as field names:
+with header option `--header` to handle the first csv row as field names:
 ```
-$ node csv2x --if=./test/test.csv --template=test
+$ node csv2x --header --if=./test/test.csv --template=test
 ```
 
 with debug option:
@@ -69,6 +71,23 @@ csv2x(
   }
 );
 ```
+
+### node example: work with files
+
+```
+const fs = require('fs');
+
+csv2x(
+  {
+    csv: fs.readFileSync('./test/test.csv', 'utf8'), 
+    template: fs.readFileSync('./test/test-template.html', 'utf8')
+  },
+  (err, result) => {
+    // process result..
+  }
+);
+```
+
 
 ## example template file
 
