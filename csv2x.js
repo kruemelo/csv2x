@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // csv2x
 // $ node csv2x --if=./node_modules/papaparse/tests/long-sample.csv
 // $ DEBUG=csv2x node csv2x --header=1 --if=./node_modules/papaparse/tests/long-sample.csv --template=test
