@@ -102,38 +102,38 @@ csv2x(
 } 
 
 if(!isEmptyRow) { %>
-<h2><%-row.Title %></h2>
+  <h2><%-row.Title %></h2>
 
-<dl>
-  
-  <dt>id</dt>
-  <dd>XX-<%-row.id || 'none' %></dd>
+  <dl>
+    
+    <dt>id</dt>
+    <dd>XX-<%-optional(row.id, 'none') %></dd>
 
-  <dt>parent id</dt>
-  <dd><%-(String(row['parent id']).trim() ? 'XX-' + row['parent id'] : 'none')%></dd>  
+    <dt>parent id</dt>
+    <dd><%-(isEmpty(row['parent id']) ? 'none' : 'XX-' + row['parent id'])%></dd>  
 
-  <dt>Components</dt>
-  <dd><%-row.Components || 'none'%></dd>  
+    <dt>Components</dt>
+    <dd><%-optional(row.Components, 'N/A') %></dd>  
 
-  <dt>Target Version</dt>
-  <dd><%-row['Target Version'] || 'none'%></dd>  
+    <dt>Target Version</dt>
+    <dd><%-optional(row['Target Version'], 'none') %></dd>  
 
-  <dt>Implemented Version</dt>
-  <dd><%-row['Implemented Version'] || 'none'%></dd>  
+    <dt>Implemented Version</dt>
+    <dd><%-optional(row['Implemented Version'], 'none') %></dd>  
 
-  <dt>Issue Type</dt>
-  <dd><%-row['Issue Type'] || 'none'%></dd>  
+    <dt>Issue Type</dt>
+    <dd><%-optional(row['Issue Type']) %></dd>  
 
-</dl>
+  </dl>
 
-<h3>Acceptance Criteria</h3>
-<p><pre><%-row['Acceptance Criteria'] %></pre></p>
+  <h3>Acceptance Criteria</h3>
+  <p><pre><%-row['Acceptance Criteria'] %></pre></p>
 
-<h3>Details</h3>
-<p><pre><%-row['Details'] %></pre></p>
+  <h3>Details</h3>
+  <p><pre><%-row['Details'] %></pre></p>
 
-<h3>Comments</h3>
-<p><pre><%-row['Comments'] %></pre></p><%
+  <h3>Comments</h3>
+  <p><pre><%-row['Comments'] %></pre></p><%
 } 
 
 if (isLastRow) { %>
@@ -149,6 +149,8 @@ if (isLastRow) { %>
   rowIndex: int current csv row index,
   isLastRow: boolean indicating the last csv row,
   isEmptyRow: boolean indicating that all cells are empty,
+  isEmpty: function to check if cell value is empty; white spaces are considered as empty, but not numbers 0,
+  optional: function returns a an optional value (default empty string) set as the second arg; pass test value to the first argument,
   argv: option hash set in csv2x(), minimist argv when running from cli,
   parser: csv-parser (papaparse/babyparse) instance,
   row: the current csv row data (array or object),
