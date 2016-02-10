@@ -161,12 +161,12 @@ int current csv row index.
  boolean indicating that all cells are empty.
 
 
-**isEmpty**
+**isEmpty(cellValue)**
 
  function to check if cell value is empty; white spaces are considered as empty, but not numbers 0.
 
 
-**optional**
+**optional(cellValue[, defaultValue])**
 
  function returns a an optional value (default empty string) set as the second arg; pass test value to the first argument.
 
