@@ -80,7 +80,8 @@ const fs = require('fs');
 csv2x(
   {
     csv: fs.readFileSync('./test/test.csv', 'utf8'), 
-    template: fs.readFileSync('./test/test-template.html', 'utf8')
+    template: fs.readFileSync('./test/test-template.html', 'utf8'),
+    header: true
   },
   (err, result) => {
     // process result..
@@ -144,20 +145,57 @@ if (isLastRow) { %>
 
 ## available template values
 
-```
-{
-  rowIndex: int current csv row index,
-  isLastRow: boolean indicating the last csv row,
-  isEmptyRow: boolean indicating that all cells are empty,
-  isEmpty: function to check if cell value is empty; white spaces are considered as empty, but not numbers 0,
-  optional: function returns a an optional value (default empty string) set as the second arg; pass test value to the first argument,
-  argv: option hash set in csv2x(), minimist argv when running from cli,
-  parser: csv-parser (papaparse/babyparse) instance,
-  row: the current csv row data (array or object),
-  errors: csv-parser errors,
-  meta: csv-parser meta data
-}
-```
+
+**rowIndex**
+
+int current csv row index.
+
+
+**isLastRow**
+
+ boolean indicating the last csv row.
+
+
+**isEmptyRow**
+
+ boolean indicating that all cells are empty.
+
+
+**isEmpty**
+
+ function to check if cell value is empty; white spaces are considered as empty, but not numbers 0.
+
+
+**optional**
+
+ function returns a an optional value (default empty string) set as the second arg; pass test value to the first argument.
+
+
+**argv**
+
+ option hash set in csv2x(), minimist argv when running from cli.
+
+
+**parser**
+
+ csv-parser (papaparse/babyparse) instance.
+
+
+**row**
+
+ the current csv row data (array or object).
+
+
+**errors**
+
+ csv-parser errors.
+
+
+**meta**
+
+ csv-parser meta data
+
+
 
 in CommonJs/node context, [babyparse](https://www.npmjs.com/package/babyparse) will be used
 
